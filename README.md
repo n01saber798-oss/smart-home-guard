@@ -65,11 +65,3 @@ The public MQTT broker used for testing is not intended for private or safety-cr
 ## ⚠️ Disclaimer
 
 This project is an educational prototype using simulated electrical measurements. It is not a certified electrical protection system and must not be used as a substitute for properly rated electrical monitoring or protection equipment.
-
-## 👨‍💻 Contributions
-
-Suggestions, bug reports, and improvements are welcome. Please open an issue or submit a pull request.
-
-## 📄 License
-
-The project license will be specified in the `LICENSE` file.
