@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d0b">
+  <title>Smart Home Guard | Cyber Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Smart Home Guard home">
+        <span class="brand-mark">⌁</span>
+        <span><strong>SMART HOME</strong><small>GUARD / SYSTEMS</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span>◈</span> Overview</a>
+        <a class="nav-link" href="#analytics"><span>▥</span> Analytics</a>
+        <a class="nav-link" href="#alerts"><span>⚠</span> Alert history</a>
+        <a class="nav-link" href="#settings"><span>⚙</span> Preferences</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="connection-card">
+          <span class="pulse-dot"></span>
+          <div><strong>SIMULATION MODE</strong><small>Waiting for ESP32 bridge</small></div>
+        </div>
+        <div class="side-foot">SHG CORE v1.0.0<br><span>LOCAL DEMO INTERFACE</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow"><span class="tiny-square"></span> MONITORING CENTER / HOME NODE 01</div>
+          <h1>System <span>Overview</span></h1>
+          <p class="subheading">Live electrical telemetry and threat monitoring.</p>
+        </div>
+        <div class="top-actions">
+          <div class="clock-box"><span class="clock-icon">◷</span><span id="clock">--:--:--</span><small>LOCAL TIME</small></div>
+          <button class="icon-button" id="themeToggle" title="Switch accent theme" aria-label="Switch accent theme">◐</button>
+        </div>
+      </header>
+
+      <section class="status-banner" aria-live="polite">
+        <div class="status-symbol" id="statusSymbol">✓</div>
+        <div class="status-copy"><span class="eyebrow">SYSTEM INTEGRITY</span><h2 id="systemStatus">ALL SYSTEMS NOMINAL</h2><p id="statusDescription">All simulated readings are within configured thresholds.</p></div>
+        <div class="status-right"><span class="status-pill" id="statusPill">● NORMAL</span><small id="lastUpdate">Updated just now</small></div>
+      </section>
+
+      <section class="metrics-grid" aria-label="Live measurements">
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-icon voltage-icon">ϟ</span><span class="metric-tag">INPUT</span></div>
+          <div class="metric-label">Voltage <span>(RMS)</span></div>
+          <div class="metric-value"><span id="voltageValue">230</span><small>V</small></div>
+          <div class="metric-bottom"><span class="metric-dot green"></span><span id="voltageState">Within range</span><span class="metric-limit">190–250 V</span></div>
+          <div class="mini-track"><span id="voltageTrack" style="width:76.7%"></span></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-icon current-icon">⏚</span><span class="metric-tag">LOAD</span></div>
+          <div class="metric-label">Current <span>(SIMULATED)</span></div>
+          <div class="metric-value"><span id="currentValue">4.2</span><small>A</small></div>
+          <div class="metric-bottom"><span class="metric-dot green" id="currentDot"></span><span id="currentState">Normal load</span><span class="metric-limit">Limit 16 A</span></div>
+          <div class="mini-track"><span id="currentTrack" style="width:14%"></span></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-icon power-icon">⌁</span><span class="metric-tag">CALCULATED</span></div>
+          <div class="metric-label">Apparent Power <span>(S)</span></div>
+          <div class="metric-value"><span id="powerValue">966</span><small>VA</small></div>
+          <div class="metric-bottom"><span class="metric-dot green"></span><span>V × I estimate</span><span class="metric-limit">Not real power</span></div>
+          <div class="mini-track"><span id="powerTrack" style="width:32.2%"></span></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-icon signal-icon">⌁</span><span class="metric-tag">DEVICE</span></div>
+          <div class="metric-label">Telemetry Link</div>
+          <div class="metric-value compact" id="linkValue">DEMO</div>
+          <div class="metric-bottom"><span class="metric-dot amber"></span><span id="linkState">Not connected to ESP32</span></div>
+          <div class="mini-track"><span class="demo-track"></span></div>
+        </article>
+      </section>
+
+      <section class="content-grid" id="analytics">
+        <article class="panel chart-panel">
+          <div class="panel-header"><div><div class="eyebrow">REAL-TIME TELEMETRY</div><h3>Voltage history</h3></div><div class="chart-tools"><span class="live-indicator"><i></i> DEMO LIVE</span><select id="chartRange" aria-label="Chart history range"><option value="12">12 points</option><option value="24" selected>24 points</option><option value="40">40 points</option></select></div></div>
+          <div class="chart-legend"><span><i class="legend-line"></i> Voltage <b>V</b></span><span class="muted">Illustrative values</span></div>
+          <div class="chart-wrap"><svg id="voltageChart" viewBox="0 0 720 240" role="img" aria-label="Voltage history chart"></svg></div>
+          <div class="chart-axis-labels"><span>OLDER READINGS</span><span>NOW</span></div>
+        </article>
+        <article class="panel distribution-panel">
+          <div class="panel-header"><div><div class="eyebrow">SYSTEM SNAPSHOT</div><h3>Threshold monitor</h3></div><span class="mini-badge">CONFIG 01</span></div>
+          <div class="threshold-item"><div class="threshold-head"><span>Low voltage warning</span><b>&lt; 190 V</b></div><div class="threshold-line"><span class="warn-fill" style="width:63%"></span></div></div>
+          <div class="threshold-item"><div class="threshold-head"><span>High voltage alert</span><b>&gt; 250 V</b></div><div class="threshold-line"><span class="danger-fill" style="width:83%"></span></div></div>
+          <div class="threshold-item"><div class="threshold-head"><span>Overcurrent alert</span><b>&gt; 16 A</b></div><div class="threshold-line"><span class="danger-fill" style="width:54%"></span></div></div>
+          <div class="threshold-note"><span>ⓘ</span><p>These are example software thresholds for the simulation, not certified electrical protection settings.</p></div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel alerts-panel" id="alerts">
+          <div class="panel-header"><div><div class="eyebrow">EVENT LOG</div><h3>Recent alerts</h3></div><button class="text-button" id="clearAlerts">Clear log ↗</button></div>
+          <div id="alertList" class="alert-list"><div class="empty-state"><span>✓</span><p>No alerts recorded yet.</p><small>Test an alert to preview the event log.</small></div></div>
+        </article>
+        <article class="panel controls-panel" id="settings">
+          <div class="panel-header"><div><div class="eyebrow">INTERFACE CONTROLS</div><h3>Customize workspace</h3></div><span class="settings-symbol">⚙</span></div>
+          <label class="setting-row"><span><b>Show apparent power</b><small>Display the VA metric card</small></span><input type="checkbox" id="showPower" checked></label>
+          <label class="setting-row"><span><b>Show voltage chart</b><small>Display history visualization</small></span><input type="checkbox" id="showChart" checked></label>
+          <label class="setting-row"><span><b>Compact layout</b><small>Reduce card spacing</small></span><input type="checkbox" id="compactMode"></label>
+          <div class="control-buttons"><button class="button-secondary" id="resetDemo">Reset demo</button><button class="button-primary" id="simulateAlert">Test alert <span>↗</span></button></div>
+        </article>
+      </section>
+      <footer class="footer"><span>SMART HOME GUARD <b>•</b> CYBER MONITORING UI</span><span>FRONTEND DEMO <b>•</b> NOT CONNECTED TO HARDWARE</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
